@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTS Bus Reservation System</title>
+    <style>
+        body {
+            background-image: url("https://www.wallpaperkiss.com/wimg/b/119-1194034_big.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: black;
+        }
+
+        /* Style for frames */
+        .frame {
+            width: 250px;
+            height: 200px;
+            margin: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            float: left;
+            position: relative; /* Necessary for absolute positioning of shadow */
+        }
+
+        .frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        /* Shadow overlay */
+        .frame::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Move up animation */
+        .frame:hover img {
+            transform: translateY(-10px);
+        }
+
+        /* Show shadow overlay on hover */
+        .frame:hover::before {
+            opacity: 1;
+        }
+
+        /* Title style */
+        .frame-title {
+            background-color: #1E90FF; /* Adjust background color as needed */
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: relative; /* Ensure the title is in front of scrolling content */
+            z-index: 2; /* Set a higher z-index to keep the title above */
+        }
+
+        /* Adjust width of frame container */
+        .container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align frames to the top */
+            flex-wrap: wrap; /* Allow frames to wrap to the next line if needed */
+        }
+
+        /* Adjust width of frame */
+        .latest-news {
+            width: 100%; /* Make it take full width of the container */
+            overflow: hidden; /* Hide overflowing content */
+            position: relative; /* Ensure the news content is positioned relative to the frame */
+            color: black; /* Set text color to black */
+        }
+
+        /* Animation for scrolling text */
+        @keyframes scroll {
+            0% { transform: translateY(0%); }
+            100% { transform: translateY(-100%); }
+        }
+
+        /* Apply animation to news content */
+        .news-content {
+            animation: scroll 10s linear infinite; /* Change the timing and behavior as needed */
+            position: absolute;
+            bottom: 0; /* Start from the bottom of the frame */
+            width: 100%; /* Take full width */
+            padding-top: 10px; /* Adjust spacing from bottom */
+            z-index: 1; /* Ensure content is behind the title */
+        }
+
+        /* Feedback section styles */
+        .feedback-section {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        .feedback-section h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .feedback-section form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feedback-section label {
+            margin-bottom: 5px;
+            color: black; /* Set text color to black */
+        }
+
+        .feedback-section textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        .feedback-section button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #1E90FF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .feedback-section button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #feedbackMessage {
+            margin-top: 10px;
+            color: #008000;
+            font-weight: bold;
+        }
+
+        /* Side heading styles */
+        .side-heading {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: black; /* Set text color to black */
+        }
+    </style>
+</head>
+<body>
+    {% extends 'myapp/base.html' %}
+
+    {% block content %}
+    <center><h1>Welcome to Bus Reservation System</h1></center>
+
+    <!-- Frames displaying random bus images -->
+    <div class="container">
+        <div class="frame latest-news"> <!-- Add a class to identify the latest news frame -->
+            <div class="frame-title">Latest Bus News</div>
+            <div class="news-content">
+                <!-- Add your latest news content here -->
+                <p>Breaking news: New route added from City A to City B!</p>
+                <p>Special discount available for early bird bookings!</p>
+                <p>Upcoming maintenance on our fleet - plan your travel accordingly.</p>
+                <p>Special discount available for early bird bookings!</p>
+
+            </div>
+        </div>
+        <div class="frame">
+            <img src="https://via.placeholder.com/250x200.png?text=Bus+1" alt="Bus 1">
+        </div>
+        <div class="frame">
+            <img src="https://via.placeholder.com/250x200.png?text=Bus+2" alt="Bus 2">
+        </div>
+        <div class="frame">
+            <img src="https://via.placeholder.com/250x200.png?text=Bus+3" alt="Bus 3">
+        </div>
+        <div class="frame">
+            <img src="https://via.placeholder.com/250x200.png?text=Bus+4" alt="Bus 4">
+        </div>
+        <div class="frame">
+            <img src="https://via.placeholder.com/250x200.png?text=Bus+5" alt="Bus 5">
+        </div>
+    </div>
+
+    <!-- Feedback section -->
+    <div class="feedback-section">
+        <h2>Feedback</h2>
+        <form id="feedbackForm">
+            <div class="rating">
+                <label class="side-heading" for="rating">Rating out of 5:</label>
+                <input type="number" id="rating" name="rating" min="1" max="5" required>
+            </div>
+            <div class="feedback">
+                <label class="side-heading" for="feedbackText">Give some text feedback:</label>
+                <textarea id="feedbackText" name="feedbackText" required></textarea>
+            </div>
+            <button type="submit" id="submitFeedback" disabled>Submit</button>
+        </form>
+        <div id="feedbackMessage" style="display: none;">Thanks for your feedback!</div>
+    </div>
+
+    <script>
+        const ratingInput = document.getElementById('rating');
+        const feedbackTextInput = document.getElementById('feedbackText');
+        const submitButton = document.getElementById('submitFeedback');
+        const feedbackForm = document.getElementById('feedbackForm');
+        const feedbackMessage = document.getElementById('feedbackMessage');
+
+        ratingInput.addEventListener('input', toggleSubmitButton);
+        feedbackTextInput.addEventListener('input', toggleSubmitButton);
+
+        function toggleSubmitButton() {
+            if (ratingInput.value && feedbackTextInput.value) {
+                submitButton.disabled = false;
+            } else {
+                submitButton.disabled = true;
+            }
+        }
+
+        feedbackForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            // Handle submission here, e.g., send feedback to the server
+            // Show thank you message
+            feedbackForm.reset();
+            submitButton.disabled = true;
+            feedbackMessage.style.display = 'block';
+            setTimeout(function () {
+                feedbackMessage.style.display = 'none';
+            }, 3000); // Hide message after 3 seconds
+        });
+    </script>
+
+    {% endblock %}
+</body>
+</html>
